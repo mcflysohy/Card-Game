@@ -60,22 +60,35 @@ return (0);
 
 int handTotal(Hand handToTotal)
 {
-
-    int runningCount=0;
+    int runningCount = 0;
+    int numberOfAces = 0;
 
     for (int i = 0; i < handToTotal.totalNumberOfCards; i++)
     {
-        int trueValue;
+        int trueValue = 0;
+
         if (handToTotal.cardValue(i) == 11 || handToTotal.cardValue(i) == 12 || handToTotal.cardValue(i) == 13)
             trueValue = 10;
+
+        else if (handToTotal.cardValue(i) == 1)
+        {
+            trueValue = 11;
+            numberOfAces += 1;
+        }
+
         else
             trueValue = handToTotal.cardValue(i);
 
         runningCount += trueValue;
     }
 
-    return runningCount;
+    while (numberOfAces > 0 && runningCount > 21)
+    {
+        runningCount -= 10;
+        numberOfAces -= 1;
+    }
 
+    return runningCount;
 }
 
 void printHand(Hand handToPrint)

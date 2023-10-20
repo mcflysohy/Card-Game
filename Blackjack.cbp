@@ -35,15 +35,15 @@
 			<Add option="-std=c++14" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="Blackjack.cpp" />
-		<Unit filename="Blackjack.hpp" />
-		<Unit filename="Card.cpp" />
-		<Unit filename="Card.hpp" />
-		<Unit filename="Deck.cpp" />
-		<Unit filename="Deck.hpp" />
-		<Unit filename="Hand.cpp" />
-		<Unit filename="Hand.hpp" />
-		<Unit filename="main.cpp" />
+		<Unit filename="bin/Blackjack.cpp" />
+		<Unit filename="bin/Blackjack.hpp" />
+		<Unit filename="bin/Card.cpp" />
+		<Unit filename="bin/Card.hpp" />
+		<Unit filename="bin/Deck.cpp" />
+		<Unit filename="bin/Deck.hpp" />
+		<Unit filename="bin/Hand.cpp" />
+		<Unit filename="bin/Hand.hpp" />
+		<Unit filename="bin/main.cpp" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

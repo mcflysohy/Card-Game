@@ -38,6 +38,8 @@ class Card{
         Suit cardSuit;
         Pip cardPip;
 
+        bool cardFaceUp = true;
+
         std::string getSuitString();
         std::string getPipString();
         int getCardValue();

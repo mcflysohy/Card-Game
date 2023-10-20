@@ -9,7 +9,6 @@ Hand dealerHand;
 
 // other variables
 bool playerBusted = false;
-bool doubleDown = false;
 
 int blackjackGameStart()
 {
@@ -29,48 +28,77 @@ std::cout << "\n";
 std::cout << "The dealer is showing: \n";
 dealerHand.printCard(1);
 
-//check for double down
+// check for blackjack
+bool playerHasBlackjack = false;
+bool dealerHasBlackjack = false;
 
+playerHasBlackjack = checkBlackjack(playerHand);
+dealerHasBlackjack = checkBlackjack(dealerHand);
 
-// player's turn
-playerTurn(playerHand);
-
-// dealer's turn if player didn't bust
-if (playerBusted == false)
+if (dealerHasBlackjack == true && playerHasBlackjack == true)
 {
-    std::cout << "The dealer has:\n";
+    std::cout << "You have Blackjack but the dealer has:\n";
     printHand(dealerHand);
-    std::cout << "\n";
+    std::cout << "\nYou both have Blackjack.  Bets are pushed.\n";
+}
 
-    while (handTotal(dealerHand) < 17)
+else if (dealerHasBlackjack == true)
+{
+    std::cout << "\nThe dealer has Blackjack ... Bad beat\n";
+    printHand(dealerHand);
+}
+
+else if (playerHasBlackjack == true)
+{
+    std::cout << "\nBlackjack you win!!!!!\n";
+}
+
+else
+{
+    //check for double down
+    bool doubleDown = false;
+    doubleDown = checkDoubleDown();
+
+    // player's turn
+    playerTurn(playerHand, doubleDown);
+
+    // dealer's turn if player didn't bust
+    if (playerBusted == false)
     {
-        std::cout << "The dealer hits\n\n";
-        dealerHand.addCardToHand(gameDeck.dealCard());
-        std::cout << "The dealer's hand is now:\n";
+        std::cout << "The dealer has:\n";
         printHand(dealerHand);
-        std::cout << "Totaling: " << handTotal(dealerHand) << "\n\n";
-        std::this_thread::sleep_for(std::chrono::milliseconds(4000));
-    }
+        std::cout << "\n";
 
-    if (handTotal(dealerHand) > 21)
-        std::cout << "The dealer busted.  You win!!!!!";
-    else
-    {
-    std::cout << "The dealer stands with: " << handTotal(dealerHand) << "\n\n";
-    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+        while (handTotal(dealerHand) < 17)
+        {
+            std::cout << "The dealer hits\n\n";
+            dealerHand.addCardToHand(gameDeck.dealCard());
+            std::cout << "The dealer's hand is now:\n";
+            printHand(dealerHand);
+            std::cout << "Totaling: " << handTotal(dealerHand) << "\n\n";
+            std::this_thread::sleep_for(std::chrono::milliseconds(4000));
+        }
 
-    if (handTotal(dealerHand) > handTotal(playerHand))
-        std::cout << "The dealer wins.  Better luck next time :p";
-    else if (handTotal(playerHand) > handTotal(dealerHand))
-        std::cout << "You win.  Congratulations!!!!!";
-    else
-        std::cout << "It's a push.  At least you didn't lose money";
-    }
-} // end of dealers turn
+        if (handTotal(dealerHand) > 21)
+            std::cout << "The dealer busted.  You win!!!!!";
+        else
+        {
+        std::cout << "The dealer stands with: " << handTotal(dealerHand) << "\n\n";
+        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+
+        if (handTotal(dealerHand) > handTotal(playerHand))
+            std::cout << "The dealer wins.  Better luck next time :p";
+        else if (handTotal(playerHand) > handTotal(dealerHand))
+            std::cout << "You win.  Congratulations!!!!!";
+        else
+            std::cout << "It's a push.  At least you didn't lose money";
+        }
+    } // end of dealers turn
+}
 
 return (0);
 
-} // end of game
+} // end of blackjackGameStart
 
 int handTotal(Hand handToTotal)
 {
@@ -103,7 +131,7 @@ int handTotal(Hand handToTotal)
     }
 
     return runningCount;
-}
+} // end of handTotal(Hand handToTotal)
 
 void printHand(Hand handToPrint)
 {
@@ -111,12 +139,27 @@ void printHand(Hand handToPrint)
     {
         handToPrint.printCard(i);
     }
-}
+} // end of printHand(Hand handToPrint)
 
-void playerTurn(Hand handToPlay)
+void playerTurn(Hand handToPlay, bool didDoubleDown)
 {
     // player's turn
     bool playerHitting = true;
+
+    if (didDoubleDown == true)
+    {
+        playerHand.addCardToHand(gameDeck.dealCard());
+        std::cout << "\nYour hand is:\n";
+        printHand(playerHand);
+        std::cout << "\nTotaling: " << handTotal(playerHand) << "\n";
+        playerHitting = false;
+        if (handTotal(playerHand) > 21)
+        {
+            std::cout << "You busted on a double down.  Tough break.";
+            playerBusted = true;
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+    }
 
     while(playerHitting)
     {
@@ -151,7 +194,7 @@ void playerTurn(Hand handToPlay)
         }
         else
             std::cout << "Invalid Input Please Try Again, (H)it or (S)tay\n";
-    } // end of while loop
+    }
 } // end of playerTurn(Hand handToPlay)
 
 bool checkDoubleDown()
@@ -183,3 +226,14 @@ bool checkDoubleDown()
     return returnDoubleDown;
 
 } // end of checkDoubleDown()
+
+bool checkBlackjack(Hand handToCheck)
+{
+    bool hasBlackjack = false;
+
+    if (handTotal(handToCheck) == 21)
+        hasBlackjack = true;
+
+    return hasBlackjack;
+
+} // end of checkBlackjack()

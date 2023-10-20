@@ -11,7 +11,8 @@
 int blackjackGameStart();
 int handTotal(Hand handToTotal);
 void printHand(Hand handToPrint);
-void playerTurn(Hand handToPlay);
+void playerTurn(Hand handToPlay, bool didDoubleDown);
 bool checkDoubleDown();
+bool checkBlackjack(Hand handToCheck);
 
 #endif // BLACKJACK_HPP_INCLUDED

@@ -35,7 +35,7 @@ int warGameStart()
 		window.clear(sf::Color::Black);
 
 		// draw everything here
-		window.draw(playerHand.mainHand[1].drawCard());
+		playerHand.mainHand[1].drawCard(window);
 
 		// end the current frame
 		window.display();

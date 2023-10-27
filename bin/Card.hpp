@@ -53,7 +53,7 @@ class Card{
         int getCardValue();
         std::string getCardName();
 
-        void drawCard(sf::RenderWindow window);
+        void drawCard(sf::RenderWindow &window);
 };
 
 #endif // CARD_HPP_INCLUDED

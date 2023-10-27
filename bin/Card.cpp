@@ -76,7 +76,7 @@ std::string Card::getCardName()
     return intCardName;
 }
 
-void drawCard(sf::RenderWindow window)
+void Card::drawCard(sf::RenderWindow &window)
 {
     window.draw(cardSprite);
 }

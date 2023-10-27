@@ -1,11 +1,11 @@
-#include "Deck.hpp"
-#include "Blackjack.hpp"
-#include <iostream>
+#include "War.hpp"
+//#include "Blackjack.hpp"
 
 int main()
 {
 
-blackjackGameStart();
+	//blackjackGameStart();
+	warGameStart();
 
-return (0);
-}
+	return (0);
+} // end of main()

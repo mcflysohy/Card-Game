@@ -1,9 +1,4 @@
-# ignore files associated with project file from codeblocks
-Blackjack.depend
-Blackjack.layout
+#ignore all object files and executables
+bin/*.o
+bin/war-app
 
-# ignore /obj directory 
-obj/
-
-# ignore /bin/Debug directory
-bin/Debug

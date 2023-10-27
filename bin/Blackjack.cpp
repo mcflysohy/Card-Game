@@ -1,6 +1,6 @@
 #include "Blackjack.hpp"
 
-// create and shuffle gameDeck
+// create game deck
 Deck gameDeck;
 
 // create vectors of Cards to hold the hands
@@ -15,7 +15,7 @@ int blackjackGameStart()
     gameDeck.createDeck();
     gameDeck.shuffleDeck();
 
-    playerInsurance = false;
+    bool playerInsurance = false;
 
     // deal the starting hands
     playerHand.addCardToHand(gameDeck.dealCard());
@@ -42,23 +42,51 @@ int blackjackGameStart()
     {
         if (playerHasBlackjack)
         {
-            std::cout << "You have blackjack but the dealer is showing an Ace\n";
-            std::cout << "Do you want to take even money? (Y)es / (N)o\n";
-            auto x;
-            std::cin >> x;
-            if (x == "Y" || x == "y")
+            bool inputting = true;
+            while(inputting)
             {
-                // pay out 2:1 on bet and end hand
-                std::cout << "You doubled your money.  Congrats!!!!\n";
-            }
+                std::cout << "You have blackjack but the dealer is showing an Ace\n";
+                std::cout << "Do you want to take even money? (Y)es / (N)o\n";
+                std::string x;
+                std::cin >> x;
+                if (x == "Y" || x == "y")
+                {
+                    // pay out 2:1 on bet and end hand
+                    std::cout << "\nYou doubled your money.  Congrats!!!!\n";
+                    inputting = false;
+                }
+                else if (x == "N" || x == "n")
+                {
+                    std::cout << "\nYou're letting it ride, hope the dealer doesn't have Blackjack\n";
+                    inputting = false;
+                }
+                else
+                    std::cout << "\nInvalid input, please try again";
+            } // end of while loop
         }
         else
-        std::cout << "Do you want to purchase insurance?";
-        std::string insuranceChoice;
-        std::cin >> insuranceChoice;
-        if (insuranceChoice == "Y" || insuranceChoice == "y")
-            playerInsurance = true;
-    }
+        {
+            bool inputting = true;
+            while (inputting)
+            {
+                std::cout << "\nDo you want to purchase insurance?\n";
+                std::string insuranceChoice;
+                std::cin >> insuranceChoice;
+                if (insuranceChoice == "Y" || insuranceChoice == "y")
+                {
+                    playerInsurance = true;
+                    inputting = false;
+                }
+                else if (insuranceChoice == "N" || insuranceChoice == "n")
+                {
+                    playerInsurance = false;
+                    inputting = false;
+                }
+                else
+                    std::cout << "\nInvalid input, please try again\n";
+            }
+        }
+    } // end of insurance offer
 
     if (dealerHasBlackjack == true && playerHasBlackjack == true)
     {
@@ -66,18 +94,15 @@ int blackjackGameStart()
         printHand(dealerHand);
         std::cout << "\nYou both have Blackjack.  Bets are pushed.\n";
     }
-
     else if (dealerHasBlackjack == true)
     {
         std::cout << "\nThe dealer has Blackjack ... Bad beat\n";
         printHand(dealerHand);
     }
-
     else if (playerHasBlackjack == true)
     {
         std::cout << "\nBlackjack you win!!!!!\n";
     }
-
     else
     {
         //check for double down
@@ -136,13 +161,11 @@ int handTotal(Hand handToTotal)
 
         if (handToTotal.cardValue(i) == 11 || handToTotal.cardValue(i) == 12 || handToTotal.cardValue(i) == 13)
             trueValue = 10;
-
         else if (handToTotal.cardValue(i) == 1)
         {
             trueValue = 11;
             numberOfAces += 1;
         }
-
         else
             trueValue = handToTotal.cardValue(i);
 

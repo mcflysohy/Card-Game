@@ -6,11 +6,11 @@ Card::Card(Suit suit, Pip pip)
 {
     cardSuit = suit;
     cardPip = pip;
+    intCardName = std::to_string(suit) + std::to_string(pip);
 }
 
 Card::Card()
 {
-
     cardSuit = (Suit)0;
     cardPip = (Pip)0;
 
@@ -69,4 +69,14 @@ std::string Card::getPipString()
 int Card::getCardValue()
 {
     return (int)cardPip;
+}
+
+std::string Card::getCardName()
+{
+    return intCardName;
+}
+
+void drawCard(sf::RenderWindow window)
+{
+    window.draw(cardSprite);
 }

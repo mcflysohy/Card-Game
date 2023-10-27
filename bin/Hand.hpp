@@ -12,8 +12,7 @@ class Hand{
         void printCard(int cardPosition);
         int cardValue(int cardPosition);
         int totalNumberOfCards = 0;
-
-    private:
+        
         std::vector<Card> mainHand;
 
 };

@@ -1,6 +1,10 @@
 #ifndef CARD_HPP_INCLUDED
 #define CARD_HPP_INCLUDED
 
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/System.hpp>
+
 #include <string>
 
 enum Pip
@@ -38,12 +42,18 @@ class Card{
         Suit cardSuit;
         Pip cardPip;
 
+        sf::Sprite cardSprite;
+        std::string intCardName; // holds the two integer value for card to help load textures
+
         bool cardFaceUp = true;
 
         std::string getSuitString();
         std::string getPipString();
+        
         int getCardValue();
+        std::string getCardName();
 
+        void drawCard(sf::RenderWindow window);
 };
 
 #endif // CARD_HPP_INCLUDED

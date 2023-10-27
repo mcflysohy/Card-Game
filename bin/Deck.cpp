@@ -3,8 +3,11 @@
 void Deck::createDeck()
 {
 
+    mainDeck.reserve(100);
+
     for (int s=1; s<=4; s++){
-        for (int p=1; p<=13; p++){
+        for (int p=1; p<=13; p++)
+        {
             Suit tempSuit = (Suit)s;
             Pip tempPip = (Pip)p;
             Card tempCard(tempSuit, tempPip);

@@ -16,8 +16,7 @@ class Deck{
         void shuffleDeck();
         void printDeck();
         Card dealCard();
-
-    private:
+        
         std::vector<Card> mainDeck;
 };
 #endif // DECK_HPP_INCLUDED

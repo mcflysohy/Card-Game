@@ -6,7 +6,7 @@ Deck gameDeck;
 Hand playerHand;
 Hand opponentHand;
 
-int warGameStart()
+void WarGame::init()
 {
 	sf::RenderWindow window(sf::VideoMode(800,600),"War");
 
@@ -16,7 +16,7 @@ int warGameStart()
 	loadTextures();
 
 	dealStartingHands();
-
+}
 
 
 	// run the program as long as the window is open
@@ -44,7 +44,7 @@ int warGameStart()
 	return 0;
 } // end of warGameStart()
 
-void dealStartingHands()
+void WarGame::dealStartingHands()
 {
 	for (auto i = 1; i<27; i++)
 	{
@@ -53,7 +53,7 @@ void dealStartingHands()
 	}
 }
 
-void loadTextures()
+void WarGame::loadTextures()
 {
 	for (auto i = 1; i <= 4; i++)
 	{

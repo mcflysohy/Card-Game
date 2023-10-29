@@ -1,6 +1,6 @@
-#include "StateManager.hpp"
+#include "GameManager.hpp"
 
-void StateManager::addState(std::unique_ptr<State> state, bool replacing)
+void GameManager::addState(std::unique_ptr<GameState> state, bool replacing)
 {
 	this->isAdding = true;
 	this->isReplacing = replacing;
@@ -8,20 +8,20 @@ void StateManager::addState(std::unique_ptr<State> state, bool replacing)
 	this->newState = std::move(state);
 }
 
-void StateManager::removeState()
+void GameManager::removeState()
 {
 	this->isRemoving = true;
 }
 
-void StateManager::handleStateChanges()
+void GameManager::handleStateChanges()
 {
-	if (this->isRemoving && !this->allStatesOnStack.empty())
+	if (this->isRemoving && !this->gameStack.empty())
 	{
-		this->allStatesOnStack.pop();
+		this->gameStack.pop();
 
-		if (!allStatesOnStack.empty())
+		if (!gameStack.empty())
 		{
-			this->allStatesOnStack.top()->resume();
+			this->gameStack.top()->resume();
 		}
 
 		this->isRemoving = false;
@@ -29,25 +29,25 @@ void StateManager::handleStateChanges()
 
 	if (this->isAdding)
 	{
-		if (!this->allStatesOnStack.empty())
+		if (!this->gameStack.empty())
 		{
 			if (this->isReplacing)
 			{
-				this->allStatesOnStack.pop();
+				this->gameStack.pop();
 			}
 			else
 			{
-				this->allStatesOnStack.top()->pause();
+				this->gameStack.top()->pause();
 			}
 		}
 
-		this->allStatesOnStack.push(std::move(this->newState));
-		this->allStatesOnStack.top()->init();
+		this->gameStack.push(std::move(this->newState));
+		this->gameStack.top()->init();
 		this->isAdding = false;
 	}
 }
 
-std::unique_ptr<State> &StateManager::getActiveState()
+std::unique_ptr<GameState> &GameManager::getActiveState()
 {
-	return this->allStatesOnStack.top();
+	return this->gameStack.top();
 }

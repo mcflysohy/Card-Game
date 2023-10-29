@@ -4,15 +4,15 @@
 #include <memory>
 #include <stack>
 
-#include "State.hpp"
+#include "GameState.hpp"
 
-class StateManager
+class GameManager
 {
 public:
-	StateManager() {};
-	~StateManager() {};
+	GameManager() {};
+	~GameManager() {};
 
-	void addState(std::unique_ptr<State> state, bool replacing = true);
+	void addState(std::unique_ptr<GameState> state, bool replacing = true);
 	void removeState();
 
 	void handleStateChanges();
@@ -20,11 +20,11 @@ public:
 	std::unique_ptr<State> &getActiveState();
 
 private:
-	std::stack<std::unique_ptr<State>> allStatesOnStack;
-	std::unique_ptr<State> newState;
+	std::stack<std::unique_ptr<GameState> gameStack;
+	std::unique_ptr<GameState> newState;
 
 	bool isRemoving;
-	bool isAdding;
+	bool isAdding; 
 	bool isReplacing;
 };
 

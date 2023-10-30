@@ -17,10 +17,10 @@ public:
 
 	void handleStateChanges();
 
-	std::unique_ptr<State> &getActiveState();
+	std::unique_ptr<GameState> &getActiveState();
 
 private:
-	std::stack<std::unique_ptr<GameState> gameStack;
+	std::stack<std::unique_ptr<GameState>> gameStack;
 	std::unique_ptr<GameState> newState;
 
 	bool isRemoving;

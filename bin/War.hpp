@@ -9,18 +9,36 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 
-class WarGame() : public GameState
+class WarGame : public GameState
 {	
-	void init();
-	
-	void handleEvents();
-	void update();
-	void draw();
-	
-	void pause();
-	void resume();
-	
-	void dealStartingHands();
-	void loadTextures();
-}
+	public:
+		virtual void init();
+		
+		virtual void handleEvents();
+		virtual void update();
+		virtual void draw(float dt);
+		
+		virtual void pause();
+		virtual void resume();
+
+	private:
+		int width = 800;
+		int height = 600;
+		Deck gameDeck;
+		Hand playerHand;
+		Hand opponentHand;
+		TextureManager texManager;
+		sf::RenderWindow window;
+
+		sf::Clock clock;
+
+		int playerScore;
+		int opponentScore;
+
+		std::string workingDirectory = "../cardTextures/basicfront/";
+		std::string cardBackLocation = "../cardTextures/redback1.png";
+
+		void dealStartingHands();
+		void loadTextures();
+};
 #endif // WAR_HPP_INCLUDED

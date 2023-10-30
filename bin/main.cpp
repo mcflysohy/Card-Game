@@ -3,9 +3,9 @@
 
 int main()
 {
+	WarGame warGameExe;
 
-	//blackjackGameStart();
-	warGameStart();
+	warGameExe.init();
 
 	return (0);
 } // end of main()

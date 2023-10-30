@@ -43,9 +43,11 @@ class Card{
         Pip cardPip;
 
         sf::Sprite cardSprite;
+        sf::Sprite backSprite;
         std::string intCardName; // holds the two integer value for card to help load textures
+        std::string cardBack; // holds location of cardBack
 
-        bool cardFaceUp = true;
+        bool cardFaceUp = false;
 
         std::string getSuitString();
         std::string getPipString();
@@ -53,7 +55,7 @@ class Card{
         int getCardValue();
         std::string getCardName();
 
-        void drawCard(sf::RenderWindow &window);
+        void drawCard(sf::RenderWindow &window, float xPos, float yPos);
 };
 
 #endif // CARD_HPP_INCLUDED

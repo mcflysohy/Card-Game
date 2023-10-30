@@ -21,6 +21,8 @@ std::string Card::getSuitString()
     std::string tempSuit;
 
     switch (cardSuit) {
+        case 0:
+            return "Blank";
         case 1:
             return "Hearts";
         case 2:
@@ -29,6 +31,8 @@ std::string Card::getSuitString()
             return "Clubs";
         case 4:
             return "Spades";
+        default:
+            return "Blank";
     }
 }
 
@@ -37,6 +41,8 @@ std::string Card::getPipString()
     std::string tempPip;
 
     switch (cardPip) {
+        case 0:
+            return "Blank";
         case 1:
             return "Ace";
         case 2:
@@ -63,6 +69,8 @@ std::string Card::getPipString()
             return "Queen";
         case 13:
             return "King";
+        default:
+            return "Blank";
     }
 }
 
@@ -76,7 +84,16 @@ std::string Card::getCardName()
     return intCardName;
 }
 
-void Card::drawCard(sf::RenderWindow &window)
+void Card::drawCard(sf::RenderWindow &window, float xPos, float yPos)
 {
-    window.draw(cardSprite);
+    if (cardFaceUp)
+    {
+        cardSprite.setPosition(sf::Vector2f(xPos, yPos));
+        window.draw(cardSprite);
+    }
+    else
+    {
+        backSprite.setPosition(sf::Vector2f(xPos, yPos));
+        window.draw(backSprite);
+    }
 }

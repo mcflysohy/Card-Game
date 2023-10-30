@@ -1,4 +1,6 @@
 #ignore all object files and executables
 bin/*.o
 bin/war-app
+bin/*.exe
+bin/*.dll
 

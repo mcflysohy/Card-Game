@@ -24,21 +24,24 @@ class WarGame : public GameState
 	private:
 		int width = 800;
 		int height = 600;
+		
 		Deck gameDeck;
+		
 		Hand playerHand;
 		Hand opponentHand;
+
 		TextureManager texManager;
 		sf::RenderWindow window;
 
+		int numberOfWars = 0;
+		
 		sf::Clock clock;
 
-		int playerScore;
-		int opponentScore;
-
 		std::string workingDirectory = "../cardTextures/basicfront/";
-		std::string cardBackLocation = "../cardTextures/redback1.png";
+		std::string cardBackLocation = "../cardTextures//basicfront/redback1.png";
 
 		void dealStartingHands();
 		void loadTextures();
+		void atWar();
 };
 #endif // WAR_HPP_INCLUDED

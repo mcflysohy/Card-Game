@@ -35,6 +35,7 @@ class WarGame : public GameState
 		sf::RenderWindow window;
 
 		bool isAtWar = false;
+		bool playerPlayedCard = false;
 
 		sf::Clock clock;
 
@@ -45,5 +46,6 @@ class WarGame : public GameState
 		void loadTextures();
 		void atWar();
 		void moveCardsToGameHand();
+		void transferGameHandToWinner(bool playerWon);
 };
 #endif // WAR_HPP_INCLUDED

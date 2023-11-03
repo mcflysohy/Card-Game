@@ -29,19 +29,21 @@ class WarGame : public GameState
 		
 		Hand playerHand;
 		Hand opponentHand;
+		Hand gameHand;
 
 		TextureManager texManager;
 		sf::RenderWindow window;
 
-		int numberOfWars = 0;
-		
+		bool isAtWar = false;
+
 		sf::Clock clock;
 
 		std::string workingDirectory = "../cardTextures/basicfront/";
-		std::string cardBackLocation = "../cardTextures//basicfront/redback1.png";
+		std::string cardBackLocation = "../cardTextures/basicfront/redback1.png";
 
 		void dealStartingHands();
 		void loadTextures();
 		void atWar();
+		void moveCardsToGameHand();
 };
 #endif // WAR_HPP_INCLUDED

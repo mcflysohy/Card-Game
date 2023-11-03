@@ -51,27 +51,20 @@ void WarGame::draw(float dt)
 	// clear the window with black
 	window.clear(sf::Color::Black);
 
-	// if player has clicked their card, draw the top card of both decks
-	if (playerHand.mainHand[0].cardFaceUp)	
-	{
-		playerHand.mainHand[0].drawCard(window, 160, 200);
-		opponentHand.mainHand[0].drawCard(window, 500, 200);
-	}
-
 	// draw player face down hand
 	playerHand.mainHand[1].drawCard(window, 30, 200);
 	// draw opponent face down hand
 	opponentHand.mainHand[1].drawCard(window, 650, 200);
-	
-	// if atWar
-	if (numberOfWars > 0)
-	{
-		playerHand.mainHand[1].drawCard(window, 160, 230);
-		opponentHand.mainHand[1].drawCard(window, 500, 230);
-		playerHand.mainHand[2].drawCard(window, 160, 260);
-		opponentHand.mainHand[2].drawCard(window, 500, 260);
-	}
 
+	if (!gameHand.mainHand.empty())
+	{
+		for (auto i = 0; i < (gameHand.mainHand.size()); (i + 2))
+		{
+			gameHand.mainHand[0].drawCard(window, 160, (200 + (30*(i/2))));
+			gameHand.mainHand[1].drawCard(window, 500, (200 + (30*(i/2))));
+		}
+	}
+	
 	// end the current frame
 	window.display();
 }
@@ -82,36 +75,26 @@ void WarGame::update()
 	
 	if (elapsed.asSeconds() > 1)
 	{
-		if (playerHand.mainHand.empty())
-		{
-			std::cout << "Player Wins\n";
-		}
-		
-		if (opponentHand.mainHand.empty())
-		{
-			std::cout << "Player Loses\n";
-		}
-
 		if (playerHand.mainHand[0].cardFaceUp)
 		{
 			if ((playerHand.mainHand[0].getCardValue()) > (opponentHand.mainHand[0].getCardValue()))
 			{
-				playerHand.mainHand.push_back(playerHand.mainHand[0]);
-				playerHand.mainHand.push_back(opponentHand.mainHand[0]);
-				playerHand.mainHand.erase(playerHand.mainHand.begin());
-				opponentHand.mainHand.erase(opponentHand.mainHand.begin());
+				moveCardsToGameHand();
+
+				isAtWar = false;
 			}
 			else if ((opponentHand.mainHand[0].getCardValue()) > (playerHand.mainHand[0].getCardValue()))
 			{
-				opponentHand.mainHand.push_back(std::move(playerHand.mainHand[0]));
-				opponentHand.mainHand.push_back(std::move(opponentHand.mainHand[0]));
-				playerHand.mainHand.erase(playerHand.mainHand.begin());
-				opponentHand.mainHand.erase(opponentHand.mainHand.begin());
+				moveCardsToGameHand();
+
+				isAtWar = false;
 			}
-			
 			else if ((opponentHand.mainHand[0].getCardValue()) == (playerHand.mainHand[0].getCardValue()))
 			{	
+				moveCardsToGameHand();
 				atWar();
+
+				isAtWar = true;
 			}
 		}
 	}
@@ -160,8 +143,24 @@ void WarGame::loadTextures()
 
 void WarGame::atWar()
 {
-	numberOfWars += 1;
-	
-	playerHand.mainHand[2].cardFaceUp = true;
-	opponentHand.mainHand[2].cardFaceUp = true;
+	for (auto i = 0; i < 2; i++)
+	{
+		gameHand.mainHand.push_back(std::move(playerHand.mainHand[0]));
+		gameHand.mainHand.push_back(std::move(opponentHand.mainHand[0]));
+		playerHand.mainHand.erase(playerHand.mainHand.begin());
+		opponentHand.mainHand.erase(opponentHand.mainHand.begin());
+	}
+}
+
+void WarGame::moveCardsToGameHand()
+{
+	if (!isAtWar)
+	{
+		gameHand.mainHand.clear();
+	}
+
+	gameHand.mainHand.push_back(std::move(playerHand.mainHand[0]));
+	gameHand.mainHand.push_back(std::move(opponentHand.mainHand[0]));
+	playerHand.mainHand.erase(playerHand.mainHand.begin());
+	opponentHand.mainHand.erase(playerHand.mainHand.begin());
 }
